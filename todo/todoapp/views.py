@@ -10,7 +10,12 @@ def home(request):
         task = request.POST.get('task')
         new_todo = todo(user = request.user, todo_name = task)
         new_todo.save()
-    return render(request,'todoapp/todoo.html', {})
+
+    all_todo = todo.objects.filter(user = request.user)
+    context = {
+        'todos': all_todo
+    }
+    return render(request,'todoapp/todoo.html', context)
 
 def register(request):
     if request.method == 'POST':
